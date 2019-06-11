@@ -27,7 +27,7 @@ module.exports = {
     module: {
         rules: [{
                 test: /\.(js|jsx)$/,
-                include: `${__dirname}/static_src`,
+                //include: `${__dirname}/static_src`,
                 loader: 'babel-loader?presets[]=react&presets[]=es2015&presets[]=stage-1',
                 exclude: /node_modules/,
             } ,
@@ -46,7 +46,7 @@ module.exports = {
         ],
     },
 
-    /*resolve: {
+    resolve: {
         modules: [`${__dirname}/static_src`, 'node_modules'],
         extensions: ['.js', '.jsx'],
     },
@@ -55,6 +55,6 @@ module.exports = {
     watchOptions: {
         aggregateTimeout: 100,
     },
-
+/*
     devtool: NODE_ENV === 'development' ? 'cheap-inline-module-source-map' : false,*/
 };

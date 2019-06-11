@@ -1,0 +1,4 @@
+*.рус
+.idea
+node_modules
+static/build

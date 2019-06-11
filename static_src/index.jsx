@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './components/App';
+import MessageField from './components/MessageField';
 
-
-const component = '<p>fdgbldjg</p>';
-//const component = <p>Hello, world!</p>;
+const component = <p>Hello, world!</p>;
 
 ReactDOM.render(
-    component,
+    < MessageField />,
     document.getElementById('root'),
 );
