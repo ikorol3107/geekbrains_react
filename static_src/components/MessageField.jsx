@@ -1,43 +1,61 @@
 import React from 'react';
 import Message from './Message';
-import Styles from '../styles/styles.css';
+import { TextField, FloatingActionButton  } from 'material-ui';
+import SendIcon from 'material-ui/svg-icons/content/send';
 
 export default class MessageField extends React.Component {
-    
     state = {
-        messages: [
-            'Робот: - Ты уверен? ', 'Робот: - да ладно! ', 'Робот: - А что ты предлагаешь? '
-        ]
+        messages: [{ text: "Привет!", sender: 'me' }, { text: "Как дела?", sender: 'me' }],
+        input: '',
     };
 
-    handleClick = () => {
-        this.setState({ messages: [ ...this.state.messages, 'Я: - "Сообщение пользователя.." ' ] });
+    handleSendMessage = () => {
+        if (this.state.input.length > 0) {
+            this.setState({
+                messages: [ ...this.state.messages, {text: this.state.input, sender: 'me'} ],
+                input: '',
+            });
+        }
     };
-    
+
     componentDidUpdate(prevProps, prevState) {
-        function randomElement( array ) {
-            return array[ Math.floor( Math.random() * array.length  ) ];
+        if (prevState.messages.length < this.state.messages.length &&
+            this.state.messages[this.state.messages.length - 1].sender === 'me') {
+            setTimeout(this.answer, 500);
         }
-        var botMessage = randomElement( this.state.messages.slice(0, 3) );
-        console.log('prevState: ', prevState, 'prevProps: ', prevProps);
-        //console.log('thisState: ', this.state, 'thisProps: ', this.props);
-       //return  setTimeout( ()=> console.log(botMessage), 1000);
-
-       function drawBotMessage() {
-        const div = document.createElement('div');
-        div.innerText = botMessage;
-        document.getElementById('messageField').insertBefore(div, document.getElementById('button') );
-        }
-        return setTimeout( ()=> (drawBotMessage()), 1000);
-        //return console.log( this.state.messages.slice(0, 3));
     }
 
+    answer = () => {
+        this.setState({ messages: [ ...this.state.messages, {text: 'Отстань, я робот', sender: 'bot'} ] });
+    };
+
+    handleType = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    };
+
+    handleKeyUp = (e) => {
+        if (e.keyCode === 13) { // Enter
+            this.handleSendMessage();
+        }
+    };
+
     render() {
-        const messageElements = this.state.messages.map(( text, index) => (
-        <Message key={ index } text={ text } />));
-      return <div id='messageField'>
-          { messageElements }
-          <button id='button' onClick={ this.handleClick }>Отправить сообщение</button>
-      </div>;
+        const messageElements = this.state.messages.map((msgObj, index) => (
+            <Message key={ index } text={ msgObj.text } sender={ msgObj.sender } />));
+
+        return <div class='messageField'>
+            { messageElements }
+            <TextField
+                name="input"
+                value={ this.state.input }
+                onChange={ this.handleType }
+                onKeyUp={ this.handleKeyUp }
+                fullWidth= {true}
+                hintText="Напишите сообщение"
+            />
+            <FloatingActionButton onClick={ this.handleSendMessage }>
+                <SendIcon />
+            </FloatingActionButton>
+        </div>
     }
 }

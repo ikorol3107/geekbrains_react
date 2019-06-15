@@ -1,16 +1,18 @@
 import React from 'react';
-// props - это внешние переменные, которые передаются компоненту
 import PropTypes from 'prop-types';
+import Chip from 'material-ui/Chip';
 
 export default class Message extends React.Component {
-    
     static propTypes = {
-        text: PropTypes.string,
+        text: PropTypes.string.isRequired,
+        sender: PropTypes.string.isRequired,
     };
-    static defaultProps = {
-        text: 'Вот это класс!'
-    };
+
     render() {
-      return <div>{ this.props.text }</div>;
+        return <Chip
+            style={ this.props.sender === 'bot' ? { backgroundColor: 'lightblue' } : {} }
+        >
+            { this.props.text }
+            </Chip>
     }
 }
