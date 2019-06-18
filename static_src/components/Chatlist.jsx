@@ -1,42 +1,19 @@
 import React from 'react';
-import Avatar from 'material-ui/Avatar';
-import {List, ListItem} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
-import Divider from 'material-ui/Divider';
-import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
+import { Link } from 'react-router-dom'
+import { List, ListItem } from 'material-ui/List';
+import ContentSend from 'material-ui/svg-icons/content/send';
 
-const ListExampleChat = () => (
-  <div class="chatlist">
-    <List>
-      <Subheader>Активные чаты</Subheader>
-      <ListItem
-        primaryText="Brendan Lim"
-        leftAvatar={<Avatar src="" />}
-        rightIcon={<CommunicationChatBubble />}
-      />
-      <ListItem
-        primaryText="Eric Hoffman"
-        leftAvatar={<Avatar src="" />}
-        rightIcon={<CommunicationChatBubble />}
-      />
-      <ListItem
-        primaryText="Grace Ng"
-        leftAvatar={<Avatar src="" />}
-        rightIcon={<CommunicationChatBubble />}
-      />
-      <ListItem
-        primaryText="Kerem Suer"
-        leftAvatar={<Avatar src="" />}
-        rightIcon={<CommunicationChatBubble />}
-      />
-      <ListItem
-        primaryText="Raquel Parrado"
-        leftAvatar={<Avatar src="" />}
-        rightIcon={<CommunicationChatBubble />}
-      />
-    </List>
-    <Divider />
-    </div>
-);
 
-export default ListExampleChat;
+export default class ChatList extends React.Component {
+
+
+    render() {
+        return (
+            <List>
+                <Link to="/chat/1/"><ListItem primaryText="Chat 1" leftIcon={<ContentSend />} /></Link>
+                <Link to="/chat/2/"><ListItem primaryText="Chat 2" leftIcon={<ContentSend />} /></Link>
+                <Link to="/chat/3/"><ListItem primaryText="Chat 3" leftIcon={<ContentSend />} /></Link>
+            </List>
+        )
+    }
+}

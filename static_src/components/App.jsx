@@ -1,28 +1,21 @@
 import React from 'react';
-import MessageField from './MessageField';
+import { Switch, Route } from 'react-router-dom'
+import Layout from './Layout';
+import Message from './Message';
+
 
 export default class App extends React.Component {
-    state = {
-        title: 'title',
-    };
+    componentDidMount () {
+        console.log('It works!');
+    }
 
-    componentWillMount() {
-        console.log('WillMountApp');
-        setTimeout( ()=> this.setState({ title: 'Updated'}), 1000);
-    }
-    componentDidMount() {
-        console.log('DidMountApp');
-    }
-    componentDidUpdate() {
-        console.log('DidUpdateApp');
-        setTimeout( ()=> this.setState({ title: 'Updated'}), 1000);
-    // wilAnmount нужен при исчезновении компонента, например, при закрытии страницы
-    }
     render() {
-        console.log('render');
-      return <div>
-          <h1>{ this.state.title } </h1>
-          < MessageField label={ this.state.title + 'counter'}/>
-      </div>;
+        return (
+            <Switch>
+                <Route exact path='/' component={ Layout } />
+                <Route exact path='/profile/' render={ () => <Message text="Профиль" sender="me" /> } />
+                <Route exact path='/chat/:chatId/' render={ obj => <Layout chatId={ Number(obj.match.params.chatId) } /> } />
+            </Switch>
+        )
     }
 }

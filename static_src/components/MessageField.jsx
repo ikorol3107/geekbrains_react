@@ -2,31 +2,21 @@ import React from 'react';
 import Message from './Message';
 import { TextField, FloatingActionButton  } from 'material-ui';
 import SendIcon from 'material-ui/svg-icons/content/send';
+import '../styles/messages.css';
+import PropTypes from "prop-types";
 
 export default class MessageField extends React.Component {
-    state = {
-        messages: [{ text: "Привет!", sender: 'me' }, { text: "Как дела?", sender: 'me' }],
-        input: '',
+    static propTypes = {
+        chatId: PropTypes.number,
+        messageElements: PropTypes.func.isRequired,
+    };
+
+    static defaultProps = {
+        chatId: 1,
     };
 
     handleSendMessage = () => {
-        if (this.state.input.length > 0) {
-            this.setState({
-                messages: [ ...this.state.messages, {text: this.state.input, sender: 'me'} ],
-                input: '',
-            });
-        }
-    };
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState.messages.length < this.state.messages.length &&
-            this.state.messages[this.state.messages.length - 1].sender === 'me') {
-            setTimeout(this.answer, 500);
-        }
-    }
-
-    answer = () => {
-        this.setState({ messages: [ ...this.state.messages, {text: 'Отстань, я робот', sender: 'bot'} ] });
+        this.props.sendMessage(this.state.input)
     };
 
     handleType = (e) => {
@@ -40,17 +30,17 @@ export default class MessageField extends React.Component {
     };
 
     render() {
-        const messageElements = this.state.messages.map((msgObj, index) => (
-            <Message key={ index } text={ msgObj.text } sender={ msgObj.sender } />));
+        const { chatId } = this.props;
 
-        return <div class='messageField'>
-            { messageElements }
+        return <div>
+            <div className="message-field">
+                { this.props.messageElements }
+            </div>
             <TextField
                 name="input"
                 value={ this.state.input }
                 onChange={ this.handleType }
                 onKeyUp={ this.handleKeyUp }
-                fullWidth= {true}
                 hintText="Напишите сообщение"
             />
             <FloatingActionButton onClick={ this.handleSendMessage }>

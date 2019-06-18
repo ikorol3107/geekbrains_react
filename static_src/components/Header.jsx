@@ -1,21 +1,22 @@
 import React from 'react';
-import Paper from 'material-ui/Paper';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
+import PropTypes from "prop-types";
 
-const style = {
-  display: 'inline-block',
-  margin: '16px 32px 16px 0',
-};
 
-const MenuExampleSimple = () => (
-  <div>
-      <div id="header">
-        <MenuItem primaryText="Архив" />
-        <MenuItem primaryText="Избранное" />
-        <MenuItem primaryText="Настройки" />
-      </div>
-  </div>
-);
+export default class Header extends React.Component {
+    static propTypes = {
+        chatId: PropTypes.number,
+        messagesSum: PropTypes.func.isRequired,
+    };
 
-export default MenuExampleSimple;
+    static defaultProps = {
+        chatId: 1,
+    };
+
+    render() {
+        this.props.messagesSum();
+        return (
+            <h1 className="header">Чат { this.props.chatId }</h1>,
+            <div> { this.props.messagesSum } </div>
+        )
+    }
+}
