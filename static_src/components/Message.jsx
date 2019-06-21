@@ -6,12 +6,9 @@ export default class Message extends React.Component {
     static propTypes = {
         text: PropTypes.string.isRequired,
         sender: PropTypes.string.isRequired,
-        sendMessage: PropTypes.func.isRequired,
     };
 
     render() {
-        this.props.sendMessage();
-
         return <Chip
             className={ this.props.sender === 'bot' ? 'bot-message' : 'my-message' }
         >
